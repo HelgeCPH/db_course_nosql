@@ -59,7 +59,7 @@ if [ ! -f "${ZIP_LIST}" ] ; then
 
   # Process the downloaded HTML link lists into a single sorted file of zipfile
   # URLs, one per line.
-  grep -oh 'http://[a-zA-Z0-9./]*.zip' "${DIR}/www.gutenberg.org/robot/harvest*" | \
+  grep -oh 'http://[a-zA-Z0-9./]*.zip' ${DIR}/www.gutenberg.org/robot/harvest* | \
     sort | \
     uniq > "${ZIP_LIST}"
 
