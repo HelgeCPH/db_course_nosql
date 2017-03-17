@@ -1,18 +1,13 @@
-# db_course_nosql
-This is a repository containing code and auxiliary artefacts for the sessions on NoSQL databases in the DB course at CPH Business Academy
-
-
-
 # Schedule
 
-## Monday, 20 March, 2017 -- Intro to GraphDBs, Neo4J, and Cypher
+## Monday, 20 March, 2017 - Intro to GraphDBs, Neo4J, and Cypher
 
   * Intro to graph databases
   * Why do we need another paradigm?
   * CRUD operations in Cypher and Query Structure
 
 
-## Monday, 27 March, 2017 -- Interacting with Neo4J from Java
+## Monday, 27 March, 2017 - Interacting with Neo4J from Java
 
   * Data import from CSV files, GraphML files, etc.
   * How to access Neo4J from Java?
@@ -25,7 +20,7 @@ This is a repository containing code and auxiliary artefacts for the sessions on
   * Assignment 3 Hand-out
 
 
-## Monday, 03 April, 2017 -- Advanced Cypher Concepts
+## Monday, 03 April, 2017 - Advanced Cypher Concepts
 
   * Refactoring of graphs
   * Recommendations with graphs
@@ -37,7 +32,8 @@ This is a repository containing code and auxiliary artefacts for the sessions on
 
 
 
-## Tuesday, 18 April, 2017 -- Guest Lecture with Craig
+## Tuesday, 18 April, 2017 - Guest Lecture & Tutorial with Craig from Neo4J
+
 
 
 ## Monday, 24 April, 2017 -- Intro to MongoDB
