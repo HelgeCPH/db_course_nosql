@@ -42,8 +42,8 @@ Vagrant.configure("2") do |config|
   # for MySQL DB server
   config.vm.network "forwarded_port", guest: 3306, host: 3306
 
-  # For Sinatra serving examples
-  config.vm.network "forwarded_port", guest: 4567, host: 4567
+  # For Python serving examples
+  config.vm.network "forwarded_port", guest: 8001, host: 8001
 
   # config.vm.network "private_network", type: "dhcp"
 
@@ -162,10 +162,8 @@ Vagrant.configure("2") do |config|
     # sudo service mysql restart
     # sudo /etc/init.d/mysql restart
 
-    sudo apt-get install -y ruby
-    sudo gem install sinatra
     cd /synced_folder/playbooks/
-    ruby http.rb &
+    python3 serve_playbooks.py &
   SHELL
 end
 
