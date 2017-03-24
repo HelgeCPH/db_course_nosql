@@ -90,6 +90,56 @@ In case you want to get rid of an index, run:
 
 
 
+<slide class="row-fluid">
+  <div class="col-sm-12">
+    <h3>Creating and Using Constraints</h3>
+    <br/>
+    <div>
+      <div class="paragraph">
+<p>A constraint assures for example that a certain attribute is unique. Creating a constraint creates automatically an index on this attribute.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->CREATE CONSTRAINT ON (p:Person) ASSERT p.id IS UNIQUE;<!--/code--></pre>
+</div>
+</div>
+	</div>
+  </div>
+</slide>
+
+
+<slide class="row-fluid">
+  <div class="col-sm-12">
+    <h3>Importing Data from a CSV File in Cypher</h3>
+    <br/>
+    <div>
+      <div class="paragraph">
+<p>A constraint assures for example that a certain attribute is unique. Creating a constraint creates automatically an index on this attribute.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->USING PERIODIC COMMIT
+LOAD CSV WITH HEADERS FROM "https://raw.githubusercontent.com/HelgeCPH/db_course_nosql/master/social_network/social_network_nodes_small.csv" AS row
+MERGE (:Person {id: toInt(row.node_id), name: row.name, job: row.job, birthday: row.birthday});<!--/code--></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To import the data for the edges, which we have stored in another CSV file do:
+</div>
+<div class="listingblock">
+<div class="content">
+<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->USING PERIODIC COMMIT 5000
+LOAD CSV WITH HEADERS FROM "https://raw.githubusercontent.com/HelgeCPH/db_course_nosql/master/social_network/social_network_edges_small.csv" AS row                   
+MATCH (f:Person {id: toInt(row.source_node_id)}), (t:Person {id: toInt(row.target_node_id)})
+CREATE (f)-[:ENDORSES]->(t);<!--/code--></pre>
+</div>
+</div>
+	</div>
+  </div>
+</slide>
+
+
+
 
 
   </carousel>
