@@ -42,6 +42,9 @@ Vagrant.configure("2") do |config|
   # for MySQL DB server
   config.vm.network "forwarded_port", guest: 3306, host: 3306
 
+  # For Sinatra serving examples
+  config.vm.network "forwarded_port", guest: 4567, host: 4567
+
   # config.vm.network "private_network", type: "dhcp"
 
   # Create a public network, which generally matched to bridged network.
@@ -53,7 +56,7 @@ Vagrant.configure("2") do |config|
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
-  # config.vm.synced_folder "../", "/synced_folder"
+  config.vm.synced_folder "../", "/synced_folder"
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
@@ -119,6 +122,9 @@ Vagrant.configure("2") do |config|
     echo "dbms.memory.heap.initial_size=1024m" >> /etc/neo4j/neo4j.conf
     echo "dbms.memory.heap.max_size=1792m" >> /etc/neo4j/neo4j.conf
 
+    sudo chmod a+rw -R /var/log/neo4j
+    sudo chmod a+rw -R /var/lib/neo4j
+
     sudo neo4j restart
 
     sudo /usr/bin/neo4j-admin set-initial-password class
@@ -155,6 +161,11 @@ Vagrant.configure("2") do |config|
 
     # sudo service mysql restart
     # sudo /etc/init.d/mysql restart
+
+    sudo apt-get install -y ruby
+    sudo gem install sinatra
+    cd /synced_folder/playbooks/
+    ruby http.rb &
   SHELL
 end
 
