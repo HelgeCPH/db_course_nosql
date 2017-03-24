@@ -121,6 +121,7 @@ Vagrant.configure("2") do |config|
     echo "dbms.connectors.default_listen_address=0.0.0.0" >> /etc/neo4j/neo4j.conf
     echo "dbms.memory.heap.initial_size=1024m" >> /etc/neo4j/neo4j.conf
     echo "dbms.memory.heap.max_size=1792m" >> /etc/neo4j/neo4j.conf
+    echo "browser.remote_content_hostname_whitelist=*" >> /etc/neo4j/neo4j.conf
 
     sudo chmod a+rw -R /var/log/neo4j
     sudo chmod a+rw -R /var/lib/neo4j
