@@ -54,7 +54,7 @@ In thise guide we will learn how to import nodes and edges from CSV files, how t
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./datamodel.png" alt="datamodel" width="100%">
+<img src="https://github.com/HelgeCPH/db_course_nosql/raw/master/playbooks/datamodel.png" alt="datamodel" height="100%">
 </div>
 </div>
 	</div>
@@ -129,7 +129,7 @@ MERGE (:Person {id: toInt(row.node_id), name: row.name, job: row.job, birthday: 
 <div class="listingblock">
 <div class="content">
 <pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->USING PERIODIC COMMIT 5000
-LOAD CSV WITH HEADERS FROM "https://raw.githubusercontent.com/HelgeCPH/db_course_nosql/master/social_network/social_network_edges_small.csv" AS row                   
+LOAD CSV WITH HEADERS FROM "https://raw.githubusercontent.com/HelgeCPH/db_course_nosql/master/social_network/social_network_edges_small.csv" AS row
 MATCH (f:Person {id: toInt(row.source_node_id)}), (t:Person {id: toInt(row.target_node_id)})
 CREATE (f)-[:ENDORSES]->(t);<!--/code--></pre>
 </div>
@@ -139,6 +139,24 @@ CREATE (f)-[:ENDORSES]->(t);<!--/code--></pre>
 </slide>
 
 
+
+<slide class="row-fluid">
+  <div class="col-sm-12">
+    <h3>What <code>MERGE</code>?</h3>
+    <br/>
+    <div>
+      <div class="paragraph">
+<p>The <code>MERGE</code> clause ensures that a pattern exists in the graph. Either the pattern already exists, or it needs to be created.</p>
+</div>
+
+<div class="paragraph">
+<p><code>MERGE</code> either matches existing nodes and binds them, or it creates new data and binds that. It is like a combination of <code>MATCH</code> and <code>CREATE</code> that additionally allows you to specify what happens if the data was matched or created.
+
+For example, you can specify that the graph must contain a node for a user with a certain name. If there is not a node with the correct name, a new node will be created and its name property set.</p>
+</div>
+	</div>
+  </div>
+</slide>
 
 
 
