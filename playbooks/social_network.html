@@ -31,12 +31,18 @@
     <br/>
     <div>
       <div class="paragraph">
-<p>Welcome to the interactive guide concerning an example of a social network, an endorsement graph.
+<p>Welcome to the interactive guide concerning an endorsement graph, and example of a social network.
 
 In thise guide we will learn how to import nodes and edges from CSV files, how to create indexes and constraints, and how to query for endorsements of a certain depth.</p>
 </div>
 <div class="paragraph">
 <p>Let&#8217;s get started!</p>
+</div>
+
+<div class="imageblock">
+<div class="content">
+<img src="https://github.com/HelgeCPH/db_course_nosql/raw/master/playbooks/endorsment_graph.png" alt="datamodel">
+</div>
 </div>
 	</div>
   </div>
@@ -159,6 +165,72 @@ For example, you can specify that the graph must contain a node for a user with 
 </slide>
 
 
+<slide class="row-fluid">
+  <div class="col-sm-12">
+    <h3>Who endorses me?</h3>
+    <br/>
+    <div>
+      <div class="paragraph">
+<p>Of course, to find those persons endorsing oneself, one has to query for the tail nodes of incomming endorsment relations.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->MATCH (me {name:"Sol Linkert"})<-[:ENDORSES]-(other)
+RETURN other<!--/code--></pre>
+</div>
+</div>
+	</div>
+  </div>
+</slide>
+
+
+<slide class="row-fluid">
+  <div class="col-sm-12">
+    <h3>Whom do I endorse?</h3>
+    <br/>
+    <div>
+      <div class="paragraph">
+<p>And vice versa, those that oneself endorses are the head nodes of outgoing endorsement relations.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->MATCH (me {name:"Sol Linkert"})-[:ENDORSES]->(other)
+RETURN other<!--/code--></pre>
+</div>
+</div>
+	</div>
+  </div>
+</slide>
+
+
+<slide class="row-fluid">
+  <div class="col-sm-12">
+    <h3>Who is endorsed by those who I endorse?</h3>
+    <br/>
+    <div>
+      <div class="paragraph">
+<p>Graph databases make it easy for us to query relations of a certain depth. For example, if we wanted to know endorsements of depth two, i.e., those who are endorsed by those who I endorse, we just create a path of depth two in our match pattern.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->MATCH (me {name:"Sol Linkert"})-[:ENDORSES]->(other)-[:ENDORSES]->(other_other)
+RETURN other_other<!--/code--></pre>
+</div>
+</div>
+
+  <div class="paragraph">
+<p>In case we would write a recommendation program those nodes that are unconnected to ourselves would likely be good candidates to be suggested to us for endorsement.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="https://github.com/HelgeCPH/db_course_nosql/raw/master/playbooks/endorsments_depth2.png" alt="datamodel">
+</div>
+</div>
+
+
+	</div>
+  </div>
+</slide>
 
   </carousel>
 </article>
