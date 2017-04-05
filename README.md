@@ -3,7 +3,6 @@
 ## Monday, 20 March, 2017 - Intro to GraphDBs, Neo4J, and Cypher
 
   * Intro to graph databases
-  * Why do we need another paradigm?
   * CRUD operations in Cypher and Query Structure
 
 
@@ -11,28 +10,24 @@
 
   * Data import from CSV files, GraphML files, etc.
   * How to access Neo4J from Java?
-    * Maven dependency
+    * Maven dependencies
     * Glance at Java API
     * Intro to SDN
-  * Include own procedures to Cypher
-
-
   * Assignment 3 Hand-out
 
 
 ## Monday, 03 April, 2017 - Advanced Cypher Concepts
 
+  * Evaluation of Assignment 3
+  * Why do we need another paradigm?
   * Refactoring of graphs
-  * Recommendations with graphs
-
+  * Modeling guidelines
+  * Intro to course project
   * Assignment 3 Hand-in (Sunday, 02 April, 2017, 24:00)
     * Experience report
 
-  * Intro to course project
 
-
-
-## Tuesday, 18 April, 2017 - Guest Lecture & Tutorial with Craig from Neo4J
+## Tuesday, 18 April, 2017 - Guest Lecture & Tutorial with Craig from Neo4j
 
 
 
