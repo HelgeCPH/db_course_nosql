@@ -6,44 +6,143 @@ https://www.exratione.com/2014/11/how-to-politely-download-all-english-language-
 
 In case you want to download all books in English and in `.txt` format from project Gutenberg you can make use of these scripts.
 
-The Vagrantfile runs with the Digital Ocean provisioner. That is, it creates a droplet at Digital Ocean, on which the `download_books.sh` script will download all the books as zipped text files. After all books are downloaded the script creates a `.tar` archive, which you can copy to your local machine with
+
+For this example we rent the cheapest possible cloud machine at DigitalOcean -which they call "droplet". The following descriptions and the provided scripts should be working on any Unix/Linux environment.
+
+However, you have to first create an account at DigitalOcean https://www.digitalocean.com.
+
+Additionally, you have to register your public SSH key at DigitalOcean. If you do not have a pair of keys read on how to do that. (https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-digitalocean-droplets)
+
+Furthermore, you have to create a Personal Access Token, see the first part of https://www.digitalocean.com/community/tutorials/how-to-use-the-digitalocean-api-v2.
+
+Set the name of the ssh key and the personal access token as environment variables. For example in Unix/Linux environments do
 
 ```bash
-vagrant scp
+export DIGITAL_OCEAN_TOKEN="your_access_token_comes_here"
+export SSH_KEY_NAME="your_key_name"
 ```
-./zip.sh
+
+on Windows this would more look like
 
 ```bash
-#!/bin/bash
+set DIGITAL_OCEAN_TOKEN="your_access_token_comes_here"
+set SSH_KEY_NAME="your_key_name"
+```
 
-DIR="$( cd "$( dirname "$0" )" && pwd)"
-# File containing the list of zipfile URLs.
-ZIP_LIST="${DIR}/zipfileLinks.txt"
-# A subdirectory in which to store the zipfiles.
-ZIP_DIR="${DIR}/zipfiles"
-# A directory in which to store the unzipped files.
-UNZIP_DIR="${DIR}/files"
+The Vagrantfile requires those two environment variables and will not work correctly if they are not defined.
 
-for ZIP_FILE in $(find ${ZIP_DIR} -name '*.zip')
-do
-  UNZIP_FILE=$(basename ${ZIP_FILE} .zip)
-  UNZIP_FILE="${UNZIP_DIR}/${UNZIP_FILE}.txt"
-  # Only unzip if not already unzipped. This check assumes that x.zip unzips to
-  # x.txt, which so far seems to be the case.
-  if [ ! -f "${UNZIP_FILE}" ] ; then
-    unzip -o "${ZIP_FILE}" -d "${UNZIP_DIR}"
-  else
-    echo "${ZIP_FILE##*/} already unzipped. Skipping."
-  fi
-done
 
-find files/ -name "*.txt" | zip books_txt_archive.zip -@
+The Vagrantfile given in this directory runs with the DigitalOcean provisioner. That is, it creates a droplet at Digital Ocean, on which the `download_books.sh` script will download all the books as zipped text files. After all books are downloaded the script creates a `.tar` archive, which you can copy to your local machine via secure copy `scp` (copy over an SSH connection). To make use of the latter, you have to install the Vagrant `scp` plugin via:
+
+```bash
+vagrant plugin install vagrant-scp
+```
+
+See https://github.com/invernizzi/vagrant-scp for more details on how to secure copy (`scp`) files from and to a Vagrant VM.
+
+
+To really execute the Vagrantfile and automatically instantiate a remote droplet you have to first install the DigitalOcean plugin for Vagrant
+
+```bash
+vagrant plugin install vagrant-digitalocean
+```
+
+Find more information on it here: https://www.digitalocean.com/community/tutorials/how-to-use-digitalocean-as-your-provider-in-vagrant-on-an-ubuntu-12-10-vps.
+
+
+Now, that everything is installed and setup. You can execute the provisioner script via:
+
+```bash
+vagrant up --provider=digital_ocean
+```
+
+This will create a remote machine, which will take some seconds and will create output similar to the following:
+
+
+```bash
+$ vagrant up --provider=digital_ocean
+Bringing machine 'bookdownloaddroplet' up with 'digital_ocean' provider...
+==> bookdownloaddroplet: Using existing SSH key: key_name
+==> bookdownloaddroplet: Creating a new droplet...
+==> bookdownloaddroplet: Assigned IP address: ip
+==> bookdownloaddroplet: Rsyncing folder: /.../DB2017/db_course_nosql/book_download/ => /vagrant
+==> bookdownloaddroplet: Running provisioner: shell...
+==> bookdownloaddroplet: mesg:
+==> bookdownloaddroplet: ttyname failed
+==> bookdownloaddroplet: :
+==> bookdownloaddroplet: Inappropriate ioctl for device
+==> bookdownloaddroplet: Hit:1 http://mirrors.digitalocean.com/ubuntu xenial InRelease
+==> bookdownloaddroplet: Get:2 http://mirrors.digitalocean.com/ubuntu xenial-updates InRelease [102 kB]
+==> bookdownloaddroplet: Get:3 http://mirrors.digitalocean.com/ubuntu xenial-backports InRelease [102 kB]
+==> bookdownloaddroplet: Get:4 http://mirrors.digitalocean.com/ubuntu xenial/main Sources [868 kB]
+==> bookdownloaddroplet: Get:5 http://security.ubuntu.com/ubuntu xenial-security InRelease [102 kB]
+==> bookdownloaddroplet: Get:6 http://mirrors.digitalocean.com/ubuntu xenial/restricted Sources [4,808 B]
+==> bookdownloaddroplet: Get:7 http://mirrors.digitalocean.com/ubuntu xenial/universe Sources [7,728 kB]
+==> bookdownloaddroplet: Get:8 http://security.ubuntu.com/ubuntu xenial-security/main Sources [67.2 kB]
+==> bookdownloaddroplet: Get:9 http://security.ubuntu.com/ubuntu xenial-security/restricted Sources [2,600 B]
+==> bookdownloaddroplet: Get:10 http://security.ubuntu.com/ubuntu xenial-security/universe Sources [26.5 kB]
+==> bookdownloaddroplet: Get:11 http://security.ubuntu.com/ubuntu xenial-security/multiverse Sources [1,144 B]
+==> bookdownloaddroplet: Get:12 http://security.ubuntu.com/ubuntu xenial-security/main amd64 Packages [243 kB]
+==> bookdownloaddroplet: Get:13 http://security.ubuntu.com/ubuntu xenial-security/main Translation-en [103 kB]
+==> bookdownloaddroplet: Get:14 http://security.ubuntu.com/ubuntu xenial-security/universe amd64 Packages [108 kB]
+==> bookdownloaddroplet: Get:15 http://security.ubuntu.com/ubuntu xenial-security/universe Translation-en [55.2 kB]
+==> bookdownloaddroplet: Get:16 http://mirrors.digitalocean.com/ubuntu xenial/multiverse Sources [179 kB]
+==> bookdownloaddroplet: Get:17 http://mirrors.digitalocean.com/ubuntu xenial-updates/main Sources [240 kB]
+==> bookdownloaddroplet: Get:18 http://mirrors.digitalocean.com/ubuntu xenial-updates/restricted Sources [2,996 B]
+==> bookdownloaddroplet: Get:19 http://mirrors.digitalocean.com/ubuntu xenial-updates/universe Sources [149 kB]
+==> bookdownloaddroplet: Get:20 http://mirrors.digitalocean.com/ubuntu xenial-updates/multiverse Sources [5,268 B]
+==> bookdownloaddroplet: Get:21 http://mirrors.digitalocean.com/ubuntu xenial-updates/main amd64 Packages [509 kB]
+==> bookdownloaddroplet: Get:22 http://mirrors.digitalocean.com/ubuntu xenial-updates/main Translation-en [205 kB]
+==> bookdownloaddroplet: Get:23 http://mirrors.digitalocean.com/ubuntu xenial-updates/universe amd64 Packages [453 kB]
+==> bookdownloaddroplet: Get:24 http://mirrors.digitalocean.com/ubuntu xenial-updates/universe Translation-en [173 kB]
+==> bookdownloaddroplet: Get:25 http://mirrors.digitalocean.com/ubuntu xenial-updates/multiverse amd64 Packages [8,920 B]
+==> bookdownloaddroplet: Get:26 http://mirrors.digitalocean.com/ubuntu xenial-updates/multiverse Translation-en [4,136 B]
+==> bookdownloaddroplet: Get:27 http://mirrors.digitalocean.com/ubuntu xenial-backports/main Sources [3,304 B]
+==> bookdownloaddroplet: Get:28 http://mirrors.digitalocean.com/ubuntu xenial-backports/universe Sources [1,868 B]
+==> bookdownloaddroplet: Get:29 http://mirrors.digitalocean.com/ubuntu xenial-backports/main amd64 Packages [4,684 B]
+==> bookdownloaddroplet: Get:30 http://mirrors.digitalocean.com/ubuntu xenial-backports/main Translation-en [3,216 B]
+==> bookdownloaddroplet: Get:31 http://mirrors.digitalocean.com/ubuntu xenial-backports/universe amd64 Packages [2,512 B]
+==> bookdownloaddroplet: Get:32 http://mirrors.digitalocean.com/ubuntu xenial-backports/universe Translation-en [1,216 B]
+==> bookdownloaddroplet: Fetched 11.5 MB in 44s (258 kB/s)
+==> bookdownloaddroplet: Reading package lists...
+==> bookdownloaddroplet: --2017-04-07 12:05:33--  https://raw.githubusercontent.com/HelgeCPH/db_course_nosql/master/book_download/download.sh
+==> bookdownloaddroplet: Resolving raw.githubusercontent.com (raw.githubusercontent.com)...
+==> bookdownloaddroplet: Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|ip|:443...
+==> bookdownloaddroplet: connected.
+==> bookdownloaddroplet: HTTP request sent, awaiting response...
+==> bookdownloaddroplet: 200 OK
+==> bookdownloaddroplet: Length:
+==> bookdownloaddroplet: 4703
+==> bookdownloaddroplet:  (4.6K)
+==> bookdownloaddroplet:  [text/plain]
+==> bookdownloaddroplet: Saving to: 'download.sh'
+==> bookdownloaddroplet:
+==> bookdownloaddroplet:      0K
+==> bookdownloaddroplet: 100%
+==> bookdownloaddroplet:  20.2M
+==> bookdownloaddroplet: =0s
+==> bookdownloaddroplet:
+==> bookdownloaddroplet: 2017-04-07 12:05:34 (20.2 MB/s) - 'download.sh' saved [4703/4703]
+==> bookdownloaddroplet: vagrant ssh
+==> bookdownloaddroplet: nohup ./download.sh > /tmp/out.log 2>&1 &
 ```
 
 
+Subsequently, you can SSH to your new remote machine and start downloading the books:
 
-2017-02-16 14:27:18
-2017-02-17 17:51:10
+```bash
+vagrant ssh
+nohup ./download.sh > /tmp/out.log 2>&1 &
+```
 
-ls -ltr zipfiles/ | wc -l
-37237
+As you can see, it took me a bit more than a day to download all English books from Project Gutenberg (start time: `2017-02-16 14:27:18`, end time: `2017-02-17 17:51:10`). Back in February it was `37237` zipped txt files (check it for example with `ls -ltr zipfiles/ | wc -l`), which are likely more now.
+
+
+
+DigitalOcean droplets are payed per hour. That is, when you are done downloading all books and after your copied the archive with it back to your local machine, you can destroy the remote machine with
+
+```bash
+vagrant destroy
+```
+
+*OBS* you pay as long as your remote machine is up and running.
