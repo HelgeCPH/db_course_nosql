@@ -82,6 +82,10 @@ echo "Downloading zipfiles."
 echo "This will take 36-48 hours if starting from scratch."
 echo "-------------------------------------------------------------------------"
 
+# replace original host with mirrored host according to mirror list
+# http://www.gutenberg.org/MIRRORS.ALL
+sed -i 's,http://www.gutenberg.lib.md.us/,ftp://sunsite.informatik.rwth-aachen.de/pub/mirror/ibiblio/gutenberg/,g' ${ZIP_LIST}
+
 for URL in $(cat "${ZIP_LIST}")
 do
   ZIP_FILE="${ZIP_DIR}/${URL##*/}"
