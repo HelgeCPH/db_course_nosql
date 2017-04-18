@@ -1,0 +1,13 @@
+
+bin/neo4j stop
+
+rm -Rf data/databases/graph.db
+
+bin/neo4j-import --into data/databases/graph.db \
+   --nodes:Book import/import-tool/books.csv \
+   --nodes:Author import/import-tool/authors.csv \
+   --relationships:AUTHORED_BY import/import-tool/book_authors.csv \
+   --nodes:City import/import-tool/cities.csv \
+   --relationships:MENTIONS import/import-tool/books_mentions_city.csv
+
+bin/neo4j start
