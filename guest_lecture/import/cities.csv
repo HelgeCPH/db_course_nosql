@@ -1,4 +1,4 @@
-city_id:ID(City),name,latitude,longitude
+city_id,name,latitude,longitude
 3039163,Sant Julià de Lòria,42.46372,1.49129
 3039678,Ordino,42.55623,1.53319
 3040051,les Escaldes,42.50729,1.53414
