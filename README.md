@@ -50,3 +50,7 @@
 ## Monday, 15 May, 2017 -- Review 2
 
 ## Monday, 22 May, 2017 -- Review 3
+
+## Wednesday, 24 May, 2017 - Project Hand-in
+
+You hand in the project by uploading a link to your group's repository on Github. **Latest hand-in time is 24:00 on Wednesday, 24 May 2017.** See more detailed instructions on what has to be contained in your repository in the [Project Description Document](lecture_notes/Project%20Description.ipynb)
