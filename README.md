@@ -53,4 +53,6 @@
 
 ## Wednesday, 24 May, 2017 - Project Hand-in
 
-You hand in the project by uploading a link to your group's repository on Github. **Latest hand-in time is 24:00 on Wednesday, 24 May 2017.** See more detailed instructions on what has to be contained in your repository in the [Project Description Document](lecture_notes/Project%20Description.ipynb)
+You hand in the project by uploading a link to your group's repository on Github to Moodle. **Latest hand-in time is 24:00 on Wednesday, 24 May 2017.** See more detailed instructions on what has to be contained in your repository in the [Project Description Document](lecture_notes/Project%20Description.ipynb)
+
+**OBS** You have to provide a link to **a release version** of your project, see https://help.github.com/articles/creating-releases/ and https://help.github.com/articles/linking-to-releases/ for how to create a release and how to link to it.
